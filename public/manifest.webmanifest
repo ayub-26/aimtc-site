@@ -1,0 +1,18 @@
+{
+  "name": "আইয়ুব ইন্টারন্যাশনাল মাইন্ড ট্রেনিং সেন্টার",
+  "short_name": "AIMTC",
+  "description": "কোরআন, হাদিস ও ইসলামিক মাইন্ড ট্রেনিংয়ের প্রতিষ্ঠান — ঢাকা, বাংলাদেশ।",
+  "lang": "bn",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#f8f3e6",
+  "theme_color": "#123a2c",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
