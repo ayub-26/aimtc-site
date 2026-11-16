@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { joinSchema } from "@/lib/join-schema";
+import { AGE_GROUPS, MIND_PROGRAMS } from "@/lib/mind-data";
 import { PROGRAMS, SITE } from "@/lib/site-data";
 
 export const Route = createFileRoute("/join")({
@@ -26,6 +27,8 @@ export const Route = createFileRoute("/join")({
   component: JoinPage,
 });
 
+const ALL_PROGRAMS = [...PROGRAMS.map((p) => p.title), ...MIND_PROGRAMS.map((p) => p.title)];
+
 type Errors = Partial<Record<"fullName" | "phone" | "email" | "age" | "program" | "message", string>>;
 
 function JoinPage() {
@@ -33,7 +36,7 @@ function JoinPage() {
   const [errors, setErrors] = useState<Errors>({});
   const [pending, setPending] = useState(false);
   const [done, setDone] = useState(false);
-  const validPreselect = PROGRAMS.some((p) => p.title === preselected) ? preselected : "";
+  const validPreselect = ALL_PROGRAMS.includes(preselected ?? "") ? preselected : "";
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,6 +62,11 @@ function JoinPage() {
       d.email ? `ইমেইল: ${d.email}` : "",
       d.age !== undefined && d.age !== "" ? `বয়স: ${d.age}` : "",
       `প্রোগ্রাম: ${d.program}`,
+      ...(["group:ক্লাসের ধরন", "guardian:অভিভাবক", "area:এলাকা", "time:সুবিধাজনক সময়"] as const).map((x) => {
+        const [k, l] = x.split(":");
+        const v = String(raw[k as string] ?? "").trim();
+        return v ? `${l}: ${v}` : "";
+      }),
       d.message ? `বার্তা: ${d.message}` : "",
     ]
       .filter(Boolean)
@@ -122,13 +130,42 @@ function JoinPage() {
                   <option value="" disabled>
                     — একটি প্রোগ্রাম বেছে নিন —
                   </option>
-                  {PROGRAMS.map((p) => (
-                    <option key={p.slug} value={p.title}>
-                      {p.title}
+                  {ALL_PROGRAMS.map((t) => (
+                    <option key={t} value={t}>
+                      {t}
                     </option>
                   ))}
                 </select>
               </Field>
+
+              <div className="grid gap-6 md:grid-cols-2">
+                <Field label="ক্লাসের ধরন (ঐচ্ছিক)" htmlFor="group">
+                  <select id="group" name="group" defaultValue="" className="flex h-10 w-full rounded-md border border-input bg-background px-3 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                    <option value="">— বেছে নিন —</option>
+                    {AGE_GROUPS.map((g) => (
+                      <option key={g} value={g}>
+                        {g}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <Field label="সুবিধাজনক সময় (ঐচ্ছিক)" htmlFor="time">
+                  <select id="time" name="time" defaultValue="" className="flex h-10 w-full rounded-md border border-input bg-background px-3 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+                    <option value="">— বেছে নিন —</option>
+                    {["সকাল", "দুপুর", "বিকাল", "সন্ধ্যা", "রাত", "যেকোনো সময়"].map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <Field label="অভিভাবকের নাম (শিশু/কিশোরের ক্ষেত্রে)" htmlFor="guardian">
+                  <Input id="guardian" name="guardian" maxLength={100} />
+                </Field>
+                <Field label="এলাকা / ঠিকানা" htmlFor="area">
+                  <Input id="area" name="area" maxLength={150} />
+                </Field>
+              </div>
 
               <Field label="আপনার বার্তা (ঐচ্ছিক)" htmlFor="message" error={errors.message}>
                 <Textarea id="message" name="message" rows={4} maxLength={1000} placeholder="কোনো প্রশ্ন বা বিশেষ তথ্য থাকলে লিখুন" />
