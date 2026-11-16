@@ -25,7 +25,7 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 xl:flex" aria-label="প্রধান মেনু">
+        <nav className="hidden items-center gap-1 2xl:flex" aria-label="প্রধান মেনু">
           {NAV.map((item) => (
             <Link
               key={item.to}
@@ -45,7 +45,7 @@ export function SiteHeader() {
           </Button>
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="glass" size="icon" className="rounded-full xl:hidden" aria-label="মেনু খুলুন">
+              <Button variant="glass" size="icon" className="rounded-full 2xl:hidden" aria-label="মেনু খুলুন">
                 <Menu />
               </Button>
             </SheetTrigger>
