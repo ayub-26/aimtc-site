@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { Toaster } from "@/components/ui/sonner";
+import { PasswordGate } from "@/components/site/password-gate";
 
 const SITE_URL = "https://aimtc-site.vercel.app"; // নিজের ডোমেইন নিলে এখানে বদলান
 const NAME_BN = "আইয়ুব ইন্টারন্যাশনাল মাইন্ড ট্রেনিং সেন্টার";
@@ -163,12 +164,14 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SiteHeader />
-      <main>
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-      </main>
-      <SiteFooter />
+      <PasswordGate>
+        <SiteHeader />
+        <main>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+        <SiteFooter />
+      </PasswordGate>
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );
