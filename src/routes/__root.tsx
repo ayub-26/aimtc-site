@@ -108,6 +108,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "কোরআন, হাদিস ও ইসলামিক মাইন্ড ট্রেনিংয়ের প্রতিষ্ঠান — ঢাকা, বাংলাদেশ।" },
       { name: "author", content: "Ayub International Mind Training Center" },
       { name: "theme-color", content: "#123a2c" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-title", content: "AIMTC" },
       { property: "og:site_name", content: "Ayub International Mind Training Center" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -118,6 +121,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -125,7 +130,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@500;600;700;800&display=swap",
       },
     ],
-    scripts: [{ type: "application/ld+json", children: JSON.stringify(STRUCTURED_DATA) }],
+       scripts: [
+      { type: "application/ld+json", children: JSON.stringify(STRUCTURED_DATA) },
+      {
+        children:
+          "if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')})}",
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
