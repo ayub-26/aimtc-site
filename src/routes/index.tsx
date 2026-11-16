@@ -11,7 +11,7 @@ import { AYAT, GALLERY, HADITHS, PROGRAMS, SITE, STATS, TESTIMONIALS } from "@/l
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "আইয়ুব ইন্টারন্যাশনাল মাইন্ড ট্রেনিং সেন্টার — কোরআন, হাদিস ও মাইন্ড ট্রেনিং" },
+      { title: "আইয়ুব ইন্টারন্যাশনাল মাইন্ড ট্রেনিং সেন্টার (Ayub International Mind Training Center) — ঢাকা" },
       {
         name: "description",
         content: "ঢাকার ইসলামিক শিক্ষা প্রতিষ্ঠান: নাজেরা, হিফজ, হাদিস, আরবি ভাষা, মহিলা বিভাগ ও ইসলামিক মাইন্ড ট্রেনিং প্রোগ্রাম।",

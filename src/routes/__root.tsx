@@ -15,6 +15,32 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { Toaster } from "@/components/ui/sonner";
 
+const SITE_URL = "https://aimtc-site.vercel.app"; // নিজের ডোমেইন নিলে এখানে বদলান
+const NAME_BN = "আইয়ুব ইন্টারন্যাশনাল মাইন্ড ট্রেনিং সেন্টার";
+const NAME_EN = "Ayub International Mind Training Center";
+const ALT_NAMES = ["AIMTC", "Ayub International", "Ayub International Mind Training", "আইয়ুব ইন্টারন্যাশনাল", "আইয়ুব মাইন্ড ট্রেনিং", "আইয়ুব ইন্টারন্যাশনাল মাইন্ড ট্রেনিং"];
+
+// Google-কে সাইটের নাম ও প্রতিষ্ঠানের পরিচয় জানায়
+const STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "WebSite", "@id": `${SITE_URL}/#website`, url: `${SITE_URL}/`, name: NAME_EN, alternateName: [NAME_BN, ...ALT_NAMES], inLanguage: "bn" },
+    {
+      "@type": "EducationalOrganization",
+      "@id": `${SITE_URL}/#org`,
+      name: NAME_BN,
+      alternateName: [NAME_EN, ...ALT_NAMES],
+      url: `${SITE_URL}/`,
+      logo: `${SITE_URL}/favicon.png`,
+      email: "ayubmd202600@gmail.com",
+      telephone: "+8801628102071",
+      address: { "@type": "PostalAddress", addressLocality: "Dhaka", addressCountry: "BD" },
+      founder: { "@type": "Person", name: "আবু আইয়ুব আনসারী" },
+      sameAs: [] as string[], // Facebook / YouTube পেজের লিংক এখানে যোগ করুন
+    },
+  ],
+};
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -99,6 +125,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@500;600;700;800&display=swap",
       },
     ],
+    scripts: [{ type: "application/ld+json", children: JSON.stringify(STRUCTURED_DATA) }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
