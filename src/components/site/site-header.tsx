@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu } from "lucide-react";
+import { Lock, Menu } from "lucide-react";
 import { useState } from "react";
 
 import logo from "@/assets/logo.png";
@@ -40,6 +40,11 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <Button asChild variant="glass" size="sm" className="hidden rounded-full px-4 sm:inline-flex">
+            <Link to="/admin-login">
+              <Lock className="size-4" /> Admin
+            </Link>
+          </Button>
           <Button asChild variant="gold" size="sm" className="rounded-full px-5">
             <Link to="/join">Join Now</Link>
           </Button>
@@ -69,6 +74,11 @@ export function SiteHeader() {
                 <Button asChild variant="gold" className="mt-4 rounded-full">
                   <Link to="/join" onClick={() => setOpen(false)}>
                     Join Now — ভর্তি হোন
+                  </Link>
+                </Button>
+                <Button asChild variant="glass" className="rounded-full">
+                  <Link to="/admin-login" onClick={() => setOpen(false)}>
+                    <Lock className="size-4" /> Admin Login
                   </Link>
                 </Button>
               </nav>
