@@ -10,9 +10,12 @@ export const monthKey = () => new Date().toISOString().slice(0, 7);
 
 const STATE_PATH = "state/state.json";
 
+// Vercel-এ প্রিফিক্স দিয়ে স্টোর জোড়া হলে নাম PUBLIC_BLOB_READ_WRITE_TOKEN হয়; দুটোই চলবে
+export const blobToken = process.env["BLOB_READ_WRITE_TOKEN"] || process.env["PUBLIC_BLOB_READ_WRITE_TOKEN"];
+
 export async function readState(): Promise<State> {
   try {
-    const meta = await head(STATE_PATH);
+    const meta = await head(STATE_PATH, { token: blobToken });
     const res = await fetch(`${meta.url}?t=${Date.now()}`, { cache: "no-store" });
     if (!res.ok) throw new Error(`state ${res.status}`);
     const s = (await res.json()) as Partial<State>;
@@ -29,6 +32,7 @@ export async function writeState(state: State) {
     contentType: "application/json",
     addRandomSuffix: false,
     allowOverwrite: true,
+    token: blobToken,
     cacheControlMaxAge: 60,
   });
 }

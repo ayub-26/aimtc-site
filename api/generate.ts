@@ -1,6 +1,6 @@
 import { del, put } from "@vercel/blob";
 
-import { isAdmin, json, MAX_CHARS, monthKey, monthlyLimit, readState, usageOf, writeState } from "./_lib.js";
+import { blobToken, isAdmin, json, MAX_CHARS, monthKey, monthlyLimit, readState, usageOf, writeState } from "./_lib.js";
 
 export const maxDuration = 60;
 
@@ -65,6 +65,7 @@ async function handlePOST(request: Request) {
     access: "public",
     contentType: "audio/wav",
     addRandomSuffix: false,
+    token: blobToken,
   });
   const clip = { id, title, lang, text, url: blob.url, createdAt: new Date().toISOString() };
   state.clips.unshift(clip);
@@ -80,7 +81,7 @@ async function handleDELETE(request: Request) {
   const state = await readState();
   const clip = state.clips.find((c) => c.id === id);
   if (!clip) return json({ error: "পাওয়া যায়নি" }, 404);
-  await del(clip.url);
+  await del(clip.url, { token: blobToken });
   state.clips = state.clips.filter((c) => c.id !== id);
   await writeState(state); // মুছলেও এই মাসের ব্যবহার ফেরত আসে না (খরচ হয়ে গেছে)
   return json({ ok: true, usage: usageOf(state) });
