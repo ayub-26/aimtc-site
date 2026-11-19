@@ -18,6 +18,8 @@ import { Route as JoinRouteImport } from './routes/join'
 import { Route as MindTrainingRouteImport } from './routes/mind-training'
 import { Route as ListenRouteImport } from './routes/listen'
 import { Route as AdminAudioRouteImport } from './routes/admin-audio'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AdminLoginRouteImport } from './routes/admin-login'
 import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as QuranRouteImport } from './routes/quran'
 import { Route as SubjectsRouteImport } from './routes/subjects'
@@ -67,6 +69,16 @@ const AdminAudioRoute = AdminAudioRouteImport.update({
   path: '/admin-audio',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin-login',
+  path: '/admin-login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProgramsRoute = ProgramsRouteImport.update({
   id: '/programs',
   path: '/programs',
@@ -93,6 +105,8 @@ export interface FileRoutesByFullPath {
   '/mind-training': typeof MindTrainingRoute
   '/listen': typeof ListenRoute
   '/admin-audio': typeof AdminAudioRoute
+  '/admin': typeof AdminRoute
+  '/admin-login': typeof AdminLoginRoute
   '/programs': typeof ProgramsRoute
   '/quran': typeof QuranRoute
   '/subjects': typeof SubjectsRoute
@@ -107,6 +121,8 @@ export interface FileRoutesByTo {
   '/mind-training': typeof MindTrainingRoute
   '/listen': typeof ListenRoute
   '/admin-audio': typeof AdminAudioRoute
+  '/admin': typeof AdminRoute
+  '/admin-login': typeof AdminLoginRoute
   '/programs': typeof ProgramsRoute
   '/quran': typeof QuranRoute
   '/subjects': typeof SubjectsRoute
@@ -122,6 +138,8 @@ export interface FileRoutesById {
   '/mind-training': typeof MindTrainingRoute
   '/listen': typeof ListenRoute
   '/admin-audio': typeof AdminAudioRoute
+  '/admin': typeof AdminRoute
+  '/admin-login': typeof AdminLoginRoute
   '/programs': typeof ProgramsRoute
   '/quran': typeof QuranRoute
   '/subjects': typeof SubjectsRoute
@@ -138,6 +156,8 @@ export interface FileRouteTypes {
     | '/mind-training'
     | '/listen'
     | '/admin-audio'
+    | '/admin'
+    | '/admin-login'
     | '/programs'
     | '/quran'
     | '/subjects'
@@ -152,6 +172,8 @@ export interface FileRouteTypes {
     | '/mind-training'
     | '/listen'
     | '/admin-audio'
+    | '/admin'
+    | '/admin-login'
     | '/programs'
     | '/quran'
     | '/subjects'
@@ -166,6 +188,8 @@ export interface FileRouteTypes {
     | '/mind-training'
     | '/listen'
     | '/admin-audio'
+    | '/admin'
+    | '/admin-login'
     | '/programs'
     | '/quran'
     | '/subjects'
@@ -181,6 +205,8 @@ export interface RootRouteChildren {
   MindTrainingRoute: typeof MindTrainingRoute
   ListenRoute: typeof ListenRoute
   AdminAudioRoute: typeof AdminAudioRoute
+  AdminRoute: typeof AdminRoute
+  AdminLoginRoute: typeof AdminLoginRoute
   ProgramsRoute: typeof ProgramsRoute
   QuranRoute: typeof QuranRoute
   SubjectsRoute: typeof SubjectsRoute
@@ -251,6 +277,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAudioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-login': {
+      id: '/admin-login'
+      path: '/admin-login'
+      fullPath: '/admin-login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/programs': {
       id: '/programs'
       path: '/programs'
@@ -285,6 +325,8 @@ const rootRouteChildren: RootRouteChildren = {
   MindTrainingRoute: MindTrainingRoute,
   ListenRoute: ListenRoute,
   AdminAudioRoute: AdminAudioRoute,
+  AdminRoute: AdminRoute,
+  AdminLoginRoute: AdminLoginRoute,
   ProgramsRoute: ProgramsRoute,
   QuranRoute: QuranRoute,
   SubjectsRoute: SubjectsRoute,

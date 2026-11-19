@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useRouterState } from "@tanstack/react-router";
 import {
   Outlet,
   Link,
@@ -14,7 +15,6 @@ import appCss from "../styles.css?url";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { Toaster } from "@/components/ui/sonner";
-import { PasswordGate } from "@/components/site/password-gate";
 
 const SITE_URL = "https://aimtc-site.vercel.app"; // নিজের ডোমেইন নিলে এখানে বদলান
 const NAME_BN = "আইয়ুব ইন্টারন্যাশনাল মাইন্ড ট্রেনিং সেন্টার";
@@ -109,9 +109,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "কোরআন, হাদিস ও ইসলামিক মাইন্ড ট্রেনিংয়ের প্রতিষ্ঠান — ঢাকা, বাংলাদেশ।" },
       { name: "author", content: "Ayub International Mind Training Center" },
       { name: "theme-color", content: "#123a2c" },
-      { name: "mobile-web-app-capable", content: "yes" },
-      { name: "apple-mobile-web-app-capable", content: "yes" },
-      { name: "apple-mobile-web-app-title", content: "AIMTC" },
       { property: "og:site_name", content: "Ayub International Mind Training Center" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -122,8 +119,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
-      { rel: "manifest", href: "/manifest.webmanifest" },
-      { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -131,13 +126,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@500;600;700;800&display=swap",
       },
     ],
-       scripts: [
-      { type: "application/ld+json", children: JSON.stringify(STRUCTURED_DATA) },
-      {
-        children:
-          "if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')})}",
-      },
-    ],
+    scripts: [{ type: "application/ld+json", children: JSON.stringify(STRUCTURED_DATA) }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -161,17 +150,16 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const inAdmin = useRouterState({ select: (st) => st.location.pathname.startsWith("/admin") });
 
   return (
     <QueryClientProvider client={queryClient}>
-      <PasswordGate>
-        <SiteHeader />
-        <main>
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </main>
-        <SiteFooter />
-      </PasswordGate>
+      {!inAdmin && <SiteHeader />}
+      <main>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </main>
+      {!inAdmin && <SiteFooter />}
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );
