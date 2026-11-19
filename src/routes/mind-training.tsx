@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 
 import { JoinCta } from "@/components/site/join-cta";
+import { SiteVideo } from "@/components/site/media-player";
 import { PageHero, SectionHeading } from "@/components/site/ornament";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
@@ -69,6 +70,8 @@ function MindTrainingPage() {
         title="Train Your Mind, Change Your Life"
         description="মনোযোগ, অর্থ ও পদক্ষেপের 3D সিস্টেম এবং চরিত্র গঠনের ধাপে ধাপে প্রশিক্ষণ। প্রশিক্ষক ও প্রতিষ্ঠাতা: আবু আইয়ুব আনসারী, ঢাকা।"
       />
+
+      <SiteVideo slot="mind-video" title="মাইন্ড ট্রেনিং পরিচিতি" />
 
       <section className="px-4 py-20">
         <div className="mx-auto max-w-6xl">

@@ -3,6 +3,7 @@ import { BookOpen, Mic2, Sparkles as Shine, Target } from "lucide-react";
 
 import classHifz from "@/assets/class-hifz.jpg";
 import { JoinCta } from "@/components/site/join-cta";
+import { useMedia } from "@/lib/media";
 import { PageHero, SectionHeading } from "@/components/site/ornament";
 import { AYAT, QURAN_FACTS } from "@/lib/site-data";
 
@@ -26,6 +27,7 @@ const TAJWEED = [
 ];
 
 function QuranPage() {
+  const m = useMedia();
   return (
     <>
       <PageHero
@@ -76,7 +78,7 @@ function QuranPage() {
               ))}
             </div>
           </div>
-          <img src={classHifz} alt="কোরআন তিলাওয়াত" width={1200} height={912} loading="lazy" className="arch-top w-full border-4 border-gold/40 object-cover shadow-soft" />
+          <img src={m.image("quran", classHifz)} alt="কোরআন তিলাওয়াত" width={1200} height={912} loading="lazy" className="arch-top w-full border-4 border-gold/40 object-cover shadow-soft" />
         </div>
       </section>
 

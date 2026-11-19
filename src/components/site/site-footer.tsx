@@ -2,16 +2,18 @@ import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 
 import logo from "@/assets/logo.png";
+import { useMedia } from "@/lib/media";
 import { NAV, PROGRAMS, SITE } from "@/lib/site-data";
 
 export function SiteFooter() {
+  const m = useMedia();
   return (
     <footer className="pattern-islamic bg-gradient-deep text-gold">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="flex items-center gap-3">
             <span className="grid size-14 place-items-center rounded-full bg-parchment p-1.5">
-              <img src={logo} alt="" width={48} height={48} loading="lazy" className="size-11 object-contain" />
+              <img src={m.image("logo", logo)} alt="" width={48} height={48} loading="lazy" className="size-11 object-contain" />
             </span>
             <div className="leading-tight">
               <p className="font-display font-bold text-deep-foreground">আইয়ুব ইন্টারন্যাশনাল</p>

@@ -3,11 +3,13 @@ import { Lock, Menu } from "lucide-react";
 import { useState } from "react";
 
 import logo from "@/assets/logo.png";
+import { useMedia } from "@/lib/media";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { NAV, SITE } from "@/lib/site-data";
 
 export function SiteHeader() {
+  const m = useMedia();
   const [open, setOpen] = useState(false);
 
   return (
@@ -15,7 +17,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 py-3">
         <Link to="/" className="flex min-w-0 items-center gap-3">
           <span className="grid size-11 shrink-0 place-items-center rounded-full bg-parchment p-1 shadow-gold">
-            <img src={logo} alt="" width={40} height={40} className="size-9 object-contain" />
+            <img src={m.image("logo", logo)} alt="" width={40} height={40} className="size-9 object-contain" />
           </span>
           <span className="min-w-0 leading-tight">
             <span className="block truncate font-display text-sm font-bold text-deep-foreground sm:text-base">

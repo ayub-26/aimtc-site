@@ -3,6 +3,8 @@ import { ArrowLeft, BookOpenCheck, Brain, Clock3, HeartHandshake, Quote, ShieldC
 
 import hero from "@/assets/hero-mosque.jpg";
 import { JoinCta } from "@/components/site/join-cta";
+import { SiteVideo } from "@/components/site/media-player";
+import { useMedia } from "@/lib/media";
 import { Ornament, SectionHeading } from "@/components/site/ornament";
 import { SiteIcon } from "@/components/site/program-icon";
 import { Button } from "@/components/ui/button";
@@ -34,12 +36,17 @@ function HomePage() {
   const ayah = AYAT[2]!;
   const hadith = HADITHS[1]!;
   const cover = GALLERY[0]!;
+  const m = useMedia();
+  const homeGallery = [
+    ...m.gallery().filter((r) => r.kind === "image").map((r) => ({ title: r.title || "ছবি", src: r.url, caption: r.title || "" })),
+    ...GALLERY,
+  ].slice(0, 6);
 
   return (
     <>
       {/* Hero */}
       <section className="relative flex min-h-[100svh] items-end overflow-hidden">
-        <img src={hero} alt="কোরআন শরীফ ও ইসলামিক স্থাপত্যের শিক্ষাকক্ষ" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
+        <img src={m.image("hero", hero)} alt="কোরআন শরীফ ও ইসলামিক স্থাপত্যের শিক্ষাকক্ষ" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-hero-overlay" />
         <div className="relative mx-auto w-full max-w-7xl px-4 pb-20 pt-36 md:pb-28">
           <div className="max-w-3xl animate-fade-up">
@@ -84,7 +91,7 @@ function HomePage() {
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
           <div className="relative mx-auto w-full max-w-md">
             <div className="arch-top overflow-hidden border-4 border-gold/50 shadow-soft">
-              <img src={cover.src} alt={cover.caption} width={1200} height={912} loading="lazy" className="aspect-[4/5] w-full object-cover" />
+              <img src={m.image("home-intro", cover.src)} alt={cover.caption} width={1200} height={912} loading="lazy" className="aspect-[4/5] w-full object-cover" />
             </div>
             <div className="absolute -bottom-6 -left-4 rounded-2xl bg-gradient-deep px-6 py-4 text-center shadow-soft md:-left-10">
               <p className="font-arabic text-2xl text-gold">اقْرَأْ</p>
@@ -124,7 +131,7 @@ function HomePage() {
             {PROGRAMS.map((p) => (
               <article key={p.slug} className="group overflow-hidden rounded-3xl border border-border bg-card shadow-card transition-transform hover:-translate-y-1">
                 <div className="relative h-48 overflow-hidden">
-                  <img src={p.image} alt={p.title} width={1200} height={912} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <img src={m.image(`program-${p.slug}`, p.image)} alt={p.title} width={1200} height={912} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   <span className="absolute left-4 top-4 grid size-12 place-items-center rounded-2xl bg-gradient-gold text-gold-foreground shadow-gold">
                     <SiteIcon name={p.icon} className="size-6" />
                   </span>
@@ -176,12 +183,14 @@ function HomePage() {
         </div>
       </section>
 
+      <SiteVideo slot="home-video" title="আমাদের পরিচিতি" />
+
       {/* Gallery preview */}
       <section className="px-4 py-24">
         <div className="mx-auto max-w-7xl">
           <SectionHeading eyebrow="ক্লাসের ছবি" title="আমাদের ক্লাস ও আয়োজন" description="শিক্ষার্থীদের প্রতিদিনের পাঠ, সেমিনার ও অনুষ্ঠানের কিছু মুহূর্ত।" />
           <div className="mt-14 grid auto-rows-[220px] grid-cols-2 gap-4 md:grid-cols-4">
-            {GALLERY.map((g, i) => (
+            {homeGallery.map((g, i) => (
               <Link
                 key={g.title}
                 to="/gallery"

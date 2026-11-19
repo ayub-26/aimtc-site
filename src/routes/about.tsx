@@ -3,6 +3,8 @@ import { Compass, Eye, Target } from "lucide-react";
 
 import classAward from "@/assets/class-award.jpg";
 import { JoinCta } from "@/components/site/join-cta";
+import { SiteVideo } from "@/components/site/media-player";
+import { useMedia } from "@/lib/media";
 import { PageHero, SectionHeading } from "@/components/site/ornament";
 import { STATS } from "@/lib/site-data";
 
@@ -27,6 +29,7 @@ const PILLARS = [
 const VALUES = ["ইখলাস (একনিষ্ঠতা)", "আমানতদারিতা", "আদব ও শিষ্টাচার", "ইহসান (উৎকর্ষ)", "ধৈর্য ও সহনশীলতা", "দলগত সহযোগিতা"];
 
 function AboutPage() {
+  const m = useMedia();
   return (
     <>
       <PageHero
@@ -52,7 +55,7 @@ function AboutPage() {
 
       <section className="pattern-islamic bg-parchment px-4 py-24 text-primary">
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
-          <img src={classAward} alt="সনদ বিতরণ অনুষ্ঠান" width={1200} height={912} loading="lazy" className="w-full rounded-3xl border-4 border-gold/40 object-cover shadow-soft" />
+          <img src={m.image("about", classAward)} alt="সনদ বিতরণ অনুষ্ঠান" width={1200} height={912} loading="lazy" className="w-full rounded-3xl border-4 border-gold/40 object-cover shadow-soft" />
           <div>
             <SectionHeading align="left" eyebrow="আমাদের মূল্যবোধ" title="যে নীতিতে আমরা চলি" />
             <ul className="mt-8 grid gap-3 sm:grid-cols-2">
@@ -74,6 +77,7 @@ function AboutPage() {
         </div>
       </section>
 
+      <SiteVideo slot="about-video" title="আমাদের সম্পর্কে" />
       <JoinCta />
     </>
   );

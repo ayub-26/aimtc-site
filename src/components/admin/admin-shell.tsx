@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { LogOut, Mic } from "lucide-react";
+import { Images, LogOut, Mic } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 // নতুন টুল যোগ করতে: এখানে একটি লাইন + একটি নতুন `admin-<নাম>.tsx` পেজ
 export const ADMIN_TOOLS = [
   { to: "/admin-audio", title: "অডিও টুল", desc: "লেখা থেকে কণ্ঠে অডিও বানান, সংরক্ষণ ও মুছুন, মাসিক সীমা দেখুন।", Icon: Mic },
+  { to: "/admin-media", title: "ছবি ও ভিডিও", desc: "সাইটের সব ছবি ও ভিডিও বদলান, গ্যালারিতে নতুন ছবি/ভিডিও/YouTube লিংক যোগ করুন।", Icon: Images },
 ] as const;
 
 export async function adminFetch(path: string, init: RequestInit = {}) {

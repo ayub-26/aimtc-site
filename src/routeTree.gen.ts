@@ -18,6 +18,7 @@ import { Route as JoinRouteImport } from './routes/join'
 import { Route as MindTrainingRouteImport } from './routes/mind-training'
 import { Route as ListenRouteImport } from './routes/listen'
 import { Route as AdminAudioRouteImport } from './routes/admin-audio'
+import { Route as AdminMediaRouteImport } from './routes/admin-media'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdminLoginRouteImport } from './routes/admin-login'
 import { Route as ProgramsRouteImport } from './routes/programs'
@@ -69,6 +70,11 @@ const AdminAudioRoute = AdminAudioRouteImport.update({
   path: '/admin-audio',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminMediaRoute = AdminMediaRouteImport.update({
+  id: '/admin-media',
+  path: '/admin-media',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/mind-training': typeof MindTrainingRoute
   '/listen': typeof ListenRoute
   '/admin-audio': typeof AdminAudioRoute
+  '/admin-media': typeof AdminMediaRoute
   '/admin': typeof AdminRoute
   '/admin-login': typeof AdminLoginRoute
   '/programs': typeof ProgramsRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByTo {
   '/mind-training': typeof MindTrainingRoute
   '/listen': typeof ListenRoute
   '/admin-audio': typeof AdminAudioRoute
+  '/admin-media': typeof AdminMediaRoute
   '/admin': typeof AdminRoute
   '/admin-login': typeof AdminLoginRoute
   '/programs': typeof ProgramsRoute
@@ -138,6 +146,7 @@ export interface FileRoutesById {
   '/mind-training': typeof MindTrainingRoute
   '/listen': typeof ListenRoute
   '/admin-audio': typeof AdminAudioRoute
+  '/admin-media': typeof AdminMediaRoute
   '/admin': typeof AdminRoute
   '/admin-login': typeof AdminLoginRoute
   '/programs': typeof ProgramsRoute
@@ -156,6 +165,7 @@ export interface FileRouteTypes {
     | '/mind-training'
     | '/listen'
     | '/admin-audio'
+    | '/admin-media'
     | '/admin'
     | '/admin-login'
     | '/programs'
@@ -172,6 +182,7 @@ export interface FileRouteTypes {
     | '/mind-training'
     | '/listen'
     | '/admin-audio'
+    | '/admin-media'
     | '/admin'
     | '/admin-login'
     | '/programs'
@@ -188,6 +199,7 @@ export interface FileRouteTypes {
     | '/mind-training'
     | '/listen'
     | '/admin-audio'
+    | '/admin-media'
     | '/admin'
     | '/admin-login'
     | '/programs'
@@ -205,6 +217,7 @@ export interface RootRouteChildren {
   MindTrainingRoute: typeof MindTrainingRoute
   ListenRoute: typeof ListenRoute
   AdminAudioRoute: typeof AdminAudioRoute
+  AdminMediaRoute: typeof AdminMediaRoute
   AdminRoute: typeof AdminRoute
   AdminLoginRoute: typeof AdminLoginRoute
   ProgramsRoute: typeof ProgramsRoute
@@ -277,6 +290,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAudioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin-media': {
+      id: '/admin-media'
+      path: '/admin-media'
+      fullPath: '/admin-media'
+      preLoaderRoute: typeof AdminMediaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -325,6 +345,7 @@ const rootRouteChildren: RootRouteChildren = {
   MindTrainingRoute: MindTrainingRoute,
   ListenRoute: ListenRoute,
   AdminAudioRoute: AdminAudioRoute,
+  AdminMediaRoute: AdminMediaRoute,
   AdminRoute: AdminRoute,
   AdminLoginRoute: AdminLoginRoute,
   ProgramsRoute: ProgramsRoute,

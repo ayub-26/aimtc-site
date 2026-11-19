@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, CheckCircle2, Clock3, UserRound } from "lucide-react";
 
 import { JoinCta } from "@/components/site/join-cta";
+import { useMedia } from "@/lib/media";
 import { PageHero } from "@/components/site/ornament";
 import { SiteIcon } from "@/components/site/program-icon";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ export const Route = createFileRoute("/programs")({
 });
 
 function ProgramsPage() {
+  const m = useMedia();
   return (
     <>
       <PageHero
@@ -33,7 +35,7 @@ function ProgramsPage() {
           {PROGRAMS.map((p, i) => (
             <article key={p.slug} id={p.slug} className="grid items-center gap-8 overflow-hidden rounded-3xl border border-border bg-card shadow-card lg:grid-cols-2">
               <div className={`h-72 lg:h-full ${i % 2 === 1 ? "lg:order-2" : ""}`}>
-                <img src={p.image} alt={p.title} width={1200} height={912} loading="lazy" className="h-full w-full object-cover" />
+                <img src={m.image(`program-${p.slug}`, p.image)} alt={p.title} width={1200} height={912} loading="lazy" className="h-full w-full object-cover" />
               </div>
               <div className="p-8 lg:p-10">
                 <span className="grid size-12 place-items-center rounded-2xl bg-gradient-gold text-gold-foreground shadow-gold">
