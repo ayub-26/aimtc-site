@@ -297,6 +297,7 @@ export const NAV = [
   { to: "/about", label: "আমাদের সম্পর্কে" },
   { to: "/programs", label: "প্রোগ্রাম" },
   { to: "/mind-training", label: "মাইন্ড ট্রেনিং" },
+  { to: "/listen", label: "শুনুন" },
   { to: "/quran", label: "কোরআন" },
   { to: "/hadith", label: "হাদিস" },
   { to: "/subjects", label: "বিষয়সমূহ" },
