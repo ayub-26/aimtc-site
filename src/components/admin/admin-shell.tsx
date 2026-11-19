@@ -12,7 +12,7 @@ export const ADMIN_TOOLS = [
 export async function adminFetch(path: string, init: RequestInit = {}) {
   const res = await fetch(path, { ...init, headers: { "Content-Type": "application/json" } });
   if (res.status === 401) window.location.assign("/admin-login");
-  const data = (await res.json().catch(() => ({}))) as Record<string, any>;
+  const data = (await res.json().catch(() => ({ error: `সার্ভার ঠিকমতো সাড়া দেয়নি (কোড ${res.status})। Vercel → Logs দেখুন।` }))) as Record<string, any>;
   return { ok: res.ok, status: res.status, data };
 }
 

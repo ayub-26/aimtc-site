@@ -4,17 +4,27 @@ import { isAdmin, json, MAX_CHARS, monthKey, monthlyLimit, readState, usageOf, w
 
 export const maxDuration = 60;
 
+// যেকোনো ভেতরের ত্রুটি যেন পেজে আসল কারণসহ দেখা যায়
+const safe = (fn: (request: Request) => Promise<Response>) => async (request: Request) => {
+  try {
+    return await fn(request);
+  } catch (error) {
+    console.error(error);
+    return json({ error: `সার্ভার ত্রুটি: ${error instanceof Error ? error.message : String(error)}` }, 500);
+  }
+};
+
 async function denied(request: Request) {
   if (isAdmin(request)) return null;
   await new Promise((r) => setTimeout(r, 800)); // ভুল পাসওয়ার্ডে একটু দেরি
   return json({ error: "অনুমতি নেই" }, 401);
 }
 
-export async function GET(request: Request) {
+async function handleGET(request: Request) {
   return (await denied(request)) ?? json({ usage: usageOf(await readState()) });
 }
 
-export async function POST(request: Request) {
+async function handlePOST(request: Request) {
   const no = await denied(request);
   if (no) return no;
   const apiKey = process.env["CARTESIA_API_KEY"];
@@ -63,7 +73,7 @@ export async function POST(request: Request) {
   return json({ clip, usage: usageOf(state) });
 }
 
-export async function DELETE(request: Request) {
+async function handleDELETE(request: Request) {
   const no = await denied(request);
   if (no) return no;
   const id = new URL(request.url).searchParams.get("id");
@@ -75,3 +85,7 @@ export async function DELETE(request: Request) {
   await writeState(state); // মুছলেও এই মাসের ব্যবহার ফেরত আসে না (খরচ হয়ে গেছে)
   return json({ ok: true, usage: usageOf(state) });
 }
+
+export const GET = safe(handleGET);
+export const POST = safe(handlePOST);
+export const DELETE = safe(handleDELETE);
