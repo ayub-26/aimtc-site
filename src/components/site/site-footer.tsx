@@ -74,7 +74,10 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-deep-foreground/10">
         <p className="mx-auto max-w-7xl px-4 py-6 text-center text-xs text-deep-muted">
-          © {new Date().getFullYear()} {SITE.nameEn}। সর্বস্বত্ব সংরক্ষিত।
+          © {new Date().getFullYear()} {SITE.nameEn}। সর্বস্বত্ব সংরক্ষিত। ·{" "}
+          <Link to="/admin-login" className="underline-offset-4 transition-colors hover:text-gold hover:underline">
+            অ্যাডমিন লগইন
+          </Link>
         </p>
       </div>
     </footer>
