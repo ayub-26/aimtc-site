@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 
 import { JoinCta } from "@/components/site/join-cta";
 import { PageHero } from "@/components/site/ornament";
-import clips from "@/lib/audio-clips.json";
 
 const TITLE = "শুনুন — অডিও পরিচিতি | আইয়ুব ইন্টারন্যাশনাল মাইন্ড ট্রেনিং সেন্টার";
 
@@ -19,7 +18,7 @@ export const Route = createFileRoute("/listen")({
   component: ListenPage,
 });
 
-type Clip = (typeof clips)[number];
+type Clip = { id: string; title: string; lang: string; text: string; url: string };
 const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
 function AudioCard({ clip, active, onPlay }: { clip: Clip; active: boolean; onPlay: () => void }) {
@@ -71,7 +70,7 @@ function AudioCard({ clip, active, onPlay }: { clip: Clip; active: boolean; onPl
       </div>
       <audio
         ref={ref}
-        src={`/audio/${clip.id}.wav`}
+        src={clip.url}
         preload="metadata"
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
@@ -86,6 +85,16 @@ function AudioCard({ clip, active, onPlay }: { clip: Clip; active: boolean; onPl
 
 function ListenPage() {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [clips, setClips] = useState<Clip[] | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/clips")
+      .then((r) => r.json())
+      .then((d: { clips?: Clip[] }) => setClips(d.clips ?? []))
+      .catch(() => setFailed(true));
+  }, []);
+
   return (
     <>
       <PageHero
@@ -95,10 +104,13 @@ function ListenPage() {
       />
       <section className="px-4 py-20">
         <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
-          {clips.map((c) => (
+          {(clips ?? []).map((c) => (
             <AudioCard key={c.id} clip={c} active={activeId === c.id} onPlay={() => setActiveId(c.id)} />
           ))}
         </div>
+        {clips?.length === 0 && <p className="text-center text-muted-foreground">শীঘ্রই অডিও যোগ করা হবে।</p>}
+        {failed && <p className="text-center text-muted-foreground">অডিও লোড করা যায়নি। একটু পরে আবার চেষ্টা করুন।</p>}
+        {!clips && !failed && <p className="text-center text-muted-foreground">লোড হচ্ছে...</p>}
       </section>
       <JoinCta />
     </>

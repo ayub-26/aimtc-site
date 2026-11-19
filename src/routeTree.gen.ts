@@ -17,6 +17,7 @@ import { Route as HadithRouteImport } from './routes/hadith'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as MindTrainingRouteImport } from './routes/mind-training'
 import { Route as ListenRouteImport } from './routes/listen'
+import { Route as AdminAudioRouteImport } from './routes/admin-audio'
 import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as QuranRouteImport } from './routes/quran'
 import { Route as SubjectsRouteImport } from './routes/subjects'
@@ -61,6 +62,11 @@ const ListenRoute = ListenRouteImport.update({
   path: '/listen',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAudioRoute = AdminAudioRouteImport.update({
+  id: '/admin-audio',
+  path: '/admin-audio',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProgramsRoute = ProgramsRouteImport.update({
   id: '/programs',
   path: '/programs',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/join': typeof JoinRoute
   '/mind-training': typeof MindTrainingRoute
   '/listen': typeof ListenRoute
+  '/admin-audio': typeof AdminAudioRoute
   '/programs': typeof ProgramsRoute
   '/quran': typeof QuranRoute
   '/subjects': typeof SubjectsRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/join': typeof JoinRoute
   '/mind-training': typeof MindTrainingRoute
   '/listen': typeof ListenRoute
+  '/admin-audio': typeof AdminAudioRoute
   '/programs': typeof ProgramsRoute
   '/quran': typeof QuranRoute
   '/subjects': typeof SubjectsRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/join': typeof JoinRoute
   '/mind-training': typeof MindTrainingRoute
   '/listen': typeof ListenRoute
+  '/admin-audio': typeof AdminAudioRoute
   '/programs': typeof ProgramsRoute
   '/quran': typeof QuranRoute
   '/subjects': typeof SubjectsRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/join'
     | '/mind-training'
     | '/listen'
+    | '/admin-audio'
     | '/programs'
     | '/quran'
     | '/subjects'
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/join'
     | '/mind-training'
     | '/listen'
+    | '/admin-audio'
     | '/programs'
     | '/quran'
     | '/subjects'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/join'
     | '/mind-training'
     | '/listen'
+    | '/admin-audio'
     | '/programs'
     | '/quran'
     | '/subjects'
@@ -168,6 +180,7 @@ export interface RootRouteChildren {
   JoinRoute: typeof JoinRoute
   MindTrainingRoute: typeof MindTrainingRoute
   ListenRoute: typeof ListenRoute
+  AdminAudioRoute: typeof AdminAudioRoute
   ProgramsRoute: typeof ProgramsRoute
   QuranRoute: typeof QuranRoute
   SubjectsRoute: typeof SubjectsRoute
@@ -231,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ListenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin-audio': {
+      id: '/admin-audio'
+      path: '/admin-audio'
+      fullPath: '/admin-audio'
+      preLoaderRoute: typeof AdminAudioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/programs': {
       id: '/programs'
       path: '/programs'
@@ -264,6 +284,7 @@ const rootRouteChildren: RootRouteChildren = {
   JoinRoute: JoinRoute,
   MindTrainingRoute: MindTrainingRoute,
   ListenRoute: ListenRoute,
+  AdminAudioRoute: AdminAudioRoute,
   ProgramsRoute: ProgramsRoute,
   QuranRoute: QuranRoute,
   SubjectsRoute: SubjectsRoute,
